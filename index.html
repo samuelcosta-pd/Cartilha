@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HardWorkManager - Cartilha do Professor</title>
+  <meta name="description"
+    content="Guia de Aplicação Pedagógica do jogo HardWorkManager para o Ensino do Domínio do Trabalho do Projeto - PMBOK® Guide 7ª Edição.">
+
+  <!-- Tipografia Editorial: Lora (títulos) + Plus Jakarta Sans (corpo) + JetBrains Mono (código) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. VARIÁVEIS E SISTEMA DE CORES (Paleta exata do jogo)
+       ========================================================================== */
+    :root {
+      /* Fundo e texto base */
+      --background: #f6f9fc;
+      --foreground: #121b29;
+
+      /* Cartões */
+      --card: #ffffff;
+      --card-foreground: #121b29;
+
+      /* Neutros / bordas */
+      --muted: #eef2f7;
+      --muted-foreground: #697281;
+      --border: #e0e5eb;
+
+      /* Destaque principal - use para títulos de seção, links do sumário, elementos de identidade da marca do jogo */
+      --primary: #908aea;
+      --primary-hover: #7b74e6;
+      --primary-foreground: #ffffff;
+      --accent: #e1e1ff;
+      --accent-foreground: #37306c;
+
+      /* Semânticas - use estas EXATAMENTE nos callout boxes de dica, aviso e correção conceitual */
+      --success: #70ddb1;
+      --success-bg: rgba(112, 221, 177, 0.18);
+      --success-foreground: #003f28;
+
+      --warning: #fddb7c;
+      --warning-bg: rgba(253, 219, 124, 0.25);
+      --warning-foreground: #634000;
+
+      --critical: #ff958d;
+      --critical-bg: rgba(255, 149, 141, 0.22);
+      --critical-foreground: #79191b;
+
+      /* Cores dos papéis da equipe no jogo - use estas para diferenciar visualmente PM, Tech Lead e UX Lead */
+      --pm: #9792ec;
+      --pm-bg: rgba(151, 146, 236, 0.15);
+      --pm-foreground: #37306c;
+
+      --tech: #30c2d8;
+      --tech-bg: rgba(48, 194, 216, 0.15);
+      --tech-foreground: #08535f;
+
+      --ux: #ff987e;
+      --ux-bg: rgba(255, 152, 126, 0.18);
+      --ux-foreground: #732613;
+
+      /* Sombras refinadas */
+      --shadow-sm: 0 2px 8px rgba(18, 27, 41, 0.04);
+      --shadow-md: 0 6px 24px rgba(18, 27, 41, 0.06);
+      --shadow-lg: 0 12px 40px rgba(18, 27, 41, 0.09);
+
+      /* Raios de borda */
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE
+       ========================================================================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding: 0 1.25rem;
+    }
+
+    /* Container centralizado estilo revista/relatório editorial */
+    .document-wrapper {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3rem 0 6rem;
+    }
+
+    /* ==========================================================================
+       3. TIPOGRAFIA & ELEMENTOS BÁSICOS
+       ========================================================================== */
+    h1,
+    h2,
+    h3,
+    h4,
+    .serif-heading {
+      font-family: 'Lora', Georgia, serif;
+      color: var(--foreground);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #243042;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      font-weight: 700;
+      color: #0d1522;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--accent-foreground);
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       4. CAPA / CABEÇALHO EDITORIAL
+       ========================================================================== */
+    .hero-header {
+      background: linear-gradient(145deg, #ffffff 0%, #fdfdff 60%, var(--accent) 150%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 3rem 3rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary) 0%, #a8a3f2 50%, var(--tech) 100%);
+    }
+
+    .hero-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--accent-foreground);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(144, 138, 234, 0.3);
+    }
+
+    .hero-brand-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: #121b29;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #434e61;
+      line-height: 1.6;
+      margin-bottom: 2.25rem;
+      max-width: 820px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--accent-foreground);
+      background: var(--accent);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    /* Grid da Ficha Técnica (Público-alvo, Duração, Formato) */
+    .meta-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .meta-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .meta-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .meta-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-foreground);
+    }
+
+    .meta-card-header svg {
+      width: 18px;
+      height: 18px;
+      color: var(--primary);
+    }
+
+    .meta-card-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a2536;
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       5. SUMÁRIO / ÍNDICE EXECUTIVO
+       ========================================================================== */
+    .toc-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      margin-bottom: 3.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--muted);
+    }
+
+    .toc-title {
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #121b29;
+    }
+
+    .toc-hint {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+      background: var(--muted);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem 1.25rem;
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      background: #fafcff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: #243042;
+      font-weight: 500;
+      font-size: 0.94rem;
+      transition: all 0.2s ease;
+    }
+
+    .toc-item:hover {
+      background: var(--accent);
+      border-color: var(--primary);
+      color: var(--accent-foreground);
+      text-decoration: none;
+      transform: translateX(4px);
+    }
+
+    .toc-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: var(--muted);
+      color: var(--accent-foreground);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .toc-item:hover .toc-number {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .toc-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-item.highlight-toc {
+      border-left: 3px solid var(--primary);
+    }
+
+    /* ==========================================================================
+       6. SEÇÕES DE CONTEÚDO (CARDS ESTILIZADOS)
+       ========================================================================== */
+    .section-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      margin-bottom: 2.75rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-badge-num {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--accent-foreground);
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(144, 138, 234, 0.3);
+      box-shadow: 0 2px 6px rgba(144, 138, 234, 0.15);
+    }
+
+    .section-title {
+      font-size: 1.95rem;
+      color: #121b29;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .subsection-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #1b2636;
+      margin: 2.25rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .subsection-title::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ==========================================================================
+       7. TABELAS ESTILIZADAS
+       ========================================================================== */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.75rem 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      background: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    thead {
+      background-color: var(--muted);
+      border-bottom: 2px solid var(--border);
+    }
+
+    th {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #2b3648;
+      font-weight: 700;
+      padding: 1rem 1.25rem;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 1.05rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: #333f52;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafcff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(225, 225, 255, 0.25);
+    }
+
+    td strong {
+      color: #121b29;
+    }
+
+    /* ==========================================================================
+       8. CALLOUT BOXES SEMÂNTICOS
+       ========================================================================== */
+    .callout {
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 0.97rem;
+      line-height: 1.65;
+      border-left: 5px solid;
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 0.15rem;
+    }
+
+    .callout-body {
+      flex: 1;
+    }
+
+    .callout-body strong {
+      display: inline;
+      font-size: 0.98rem;
+    }
+
+    /* Dica / Info (Accent / Primary) */
+    .callout-info {
+      background-color: rgba(225, 225, 255, 0.45);
+      border-left-color: var(--primary);
+      color: var(--accent-foreground);
+    }
+
+    .callout-info .callout-icon {
+      color: var(--primary);
+    }
+
+    .callout-info strong {
+      color: var(--accent-foreground);
+    }
+
+    /* Aviso / Warning */
+    .callout-warning {
+      background-color: var(--warning-bg);
+      border-left-color: #e5b838;
+      color: var(--warning-foreground);
+    }
+
+    .callout-warning .callout-icon {
+      color: #b38206;
+    }
+
+    .callout-warning strong {
+      color: #4b3100;
+    }
+
+    /* Crítico / Limite / Correção Conceitual */
+    .callout-critical {
+      background-color: var(--critical-bg);
+      border-left-color: var(--critical);
+      color: var(--critical-foreground);
+    }
+
+    .callout-critical .callout-icon {
+      color: #c93438;
+    }
+
+    .callout-critical strong {
+      color: #5d0f11;
+    }
+
+    /* Sucesso / Princípio Formativo */
+    .callout-success {
+      background-color: var(--success-bg);
+      border-left-color: var(--success);
+      color: var(--success-foreground);
+    }
+
+    .callout-success .callout-icon {
+      color: #128256;
+    }
+
+    .callout-success strong {
+      color: #003320;
+    }
+
+    /* ==========================================================================
+       9. BADGES DOS PAPÉIS DA EQUIPE (PM, TECH LEAD, UX LEAD)
+       ========================================================================== */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    .role-badge-pm {
+      background-color: var(--pm-bg);
+      color: var(--pm-foreground);
+      border: 1px solid rgba(151, 146, 236, 0.4);
+    }
+
+    .role-badge-tech {
+      background-color: var(--tech-bg);
+      color: var(--tech-foreground);
+      border: 1px solid rgba(48, 194, 216, 0.4);
+    }
+
+    .role-badge-ux {
+      background-color: var(--ux-bg);
+      color: var(--ux-foreground);
+      border: 1px solid rgba(255, 152, 126, 0.45);
+    }
+
+    /* ==========================================================================
+       10. TERMINAL / FLUXOGRAMA DE CÓDIGO (MECÂNICA)
+       ========================================================================== */
+    .terminal-box {
+      background-color: #131923;
+      border: 1px solid #283244;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin: 1.75rem 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .terminal-header {
+      background-color: #1a2230;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid #283244;
+    }
+
+    .terminal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot-red {
+      background-color: #ff5f56;
+    }
+
+    .dot-yellow {
+      background-color: #ffbd2e;
+    }
+
+    .dot-green {
+      background-color: #27c93f;
+    }
+
+    .terminal-title {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: 0.5rem;
+      font-weight: 500;
+    }
+
+    pre.flow-code {
+      margin: 0;
+      padding: 1.5rem;
+      overflow-x: auto;
+      background-color: #131923;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ==========================================================================
+       11. CHECKLIST VISUAL (PREPARAÇÃO TÉCNICA)
+       ========================================================================== */
+    .checklist {
+      list-style: none;
+      margin: 1.25rem 0;
+      padding: 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.8rem 1rem;
+      background: #fafcff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.65rem;
+      font-size: 0.98rem;
+    }
+
+    .checklist-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+
+    .checklist-box svg {
+      width: 14px;
+      height: 14px;
+      color: var(--primary);
+      opacity: 0.85;
+    }
+
+    /* ==========================================================================
+       12. TEMPLATE DE EXEMPLO / BOX DESTACADO (SEÇÃO 11)
+       ========================================================================== */
+    .example-card {
+      background: linear-gradient(135deg, #fbfbfe 0%, #f4f4fd 100%);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .example-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-foreground);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .example-body {
+      font-size: 0.95rem;
+      color: #243042;
+      line-height: 1.65;
+    }
+
+    ul.standard-list {
+      margin: 1rem 0 1.5rem 1.5rem;
+      color: #2e3a4d;
+    }
+
+    ul.standard-list li {
+      margin-bottom: 0.6rem;
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       13. BOTÃO FLUTUANTE DE VOLTAR AO SUMÁRIO
+       ========================================================================== */
+    .back-to-toc {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--card);
+      color: var(--accent-foreground);
+      border: 1px solid var(--primary);
+      padding: 0.65rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .back-to-toc:hover {
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+      transform: translateY(-3px);
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(144, 138, 234, 0.35);
+    }
+
+    .back-to-toc svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ==========================================================================
+       14. RODAPÉ DO DOCUMENTO
+       ========================================================================== */
+    .document-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem 1.5rem;
+      text-align: center;
+      color: var(--muted-foreground);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .footer-license {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: var(--muted);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: #4b5563;
+      font-style: normal;
+    }
+
+    /* ==========================================================================
+       15. RESPONSIVIDADE
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .hero-header {
+        padding: 2.25rem 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 2.1rem;
+      }
+
+      .meta-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+
+      .toc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-block {
+        padding: 2rem 1.25rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .section-badge-num {
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+      }
+
+      .back-to-toc {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        padding: 0.5rem 0.85rem;
+        font-size: 0.78rem;
+      }
+    }
+
+    /* ==========================================================================
+       16. ELEMENTOS INTERATIVOS: MODAL DE EVIDÊNCIAS VISUAIS DO JOGO
+       ========================================================================== */
+    .game-preview-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .game-preview-text {
+      font-weight: 500;
+      color: #1e293b;
+      line-height: 1.45;
+    }
+
+    .game-preview-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .btn-game-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #f0effe;
+      color: #4f46e5;
+      border: 1px solid #d5d3fb;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 2px rgba(79, 70, 229, 0.08);
+      text-decoration: none;
+    }
+
+    .btn-game-preview:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary-hover);
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 12px rgba(144, 138, 234, 0.38);
+    }
+
+    .btn-game-preview:active {
+      transform: translateY(0);
+    }
+
+    .btn-game-preview svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-game-preview:hover svg {
+      transform: scale(1.1);
+    }
+
+    /* Trava o scroll da página enquanto o modal estiver aberto */
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    /* Fundo transparente escuro com desfoque */
+    .evidence-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(10, 15, 29, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 1.25rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .evidence-modal-backdrop.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Cartão do Modal */
+    .evidence-modal-dialog {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.08);
+      max-width: 980px;
+      width: 100%;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.95) translateY(12px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .evidence-modal-backdrop.is-active .evidence-modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Cabeçalho do Modal */
+    .modal-header {
+      padding: 1.15rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: linear-gradient(to right, #ffffff, #fafbff);
+    }
+
+    .modal-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .modal-level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-foreground);
+      background: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      align-self: flex-start;
+      border: 1px solid rgba(144, 138, 234, 0.3);
+    }
+
+    .modal-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #121b29;
+      margin: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .modal-counter-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted-foreground);
+      background: var(--muted);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #4b5563;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .modal-close-btn:hover {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
+      transform: rotate(90deg);
+    }
+
+    /* Corpo com Imagem e Navegação */
+    .modal-body {
+      position: relative;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      max-height: calc(94vh - 210px);
+      overflow: hidden;
+      padding: 1rem;
+    }
+
+    .modal-img-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: calc(94vh - 230px);
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 5;
+    }
+
+    .modal-nav-btn:hover {
+      background: #ffffff;
+      color: var(--primary);
+      transform: translateY(-50%) scale(1.08);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-nav-prev {
+      left: 1.25rem;
+    }
+
+    .modal-nav-next {
+      right: 1.25rem;
+    }
+
+    .modal-nav-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.4;
+    }
+
+    /* Rodapé com Explicação Pedagógica e Abas */
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .modal-description-card {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #334155;
+      background: #f8fafc;
+      border-left: 3px solid var(--primary);
+      padding: 0.65rem 0.95rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .modal-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .modal-tab-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--muted-foreground);
+      background: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .modal-tab-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .modal-tab-btn.is-active {
+      background: var(--accent);
+      color: var(--accent-foreground);
+      border-color: rgba(144, 138, 234, 0.45);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .evidence-modal-backdrop {
+        padding: 0.75rem;
+      }
+      .modal-header {
+        padding: 0.85rem 1rem;
+      }
+      .modal-title {
+        font-size: 1.05rem;
+      }
+      .modal-body {
+        max-height: 48vh;
+        min-height: 220px;
+        padding: 0.5rem;
+      }
+      .modal-image {
+        max-height: 45vh;
+      }
+      .modal-nav-btn {
+        width: 36px;
+        height: 36px;
+      }
+      .modal-nav-prev { left: 0.5rem; }
+      .modal-nav-next { right: 0.5rem; }
+      .modal-footer {
+        padding: 0.85rem 1rem;
+      }
+      .modal-description-card {
+        font-size: 0.84rem;
+      }
+      .modal-tabs {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       17. MEDIA QUERY DE IMPRESSÃO (PRINT)
+       ========================================================================== */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt !important;
+        padding: 0 !important;
+      }
+
+      .document-wrapper {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      .hero-header,
+      .section-block,
+      .toc-container {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        page-break-inside: avoid;
+        margin-bottom: 2cm !important;
+      }
+
+      .hero-header::after {
+        display: none;
+      }
+
+      .back-to-toc {
+        display: none !important;
+      }
+
+      .btn-game-preview,
+      .evidence-modal-backdrop {
+        display: none !important;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tr {
+        page-break-inside: avoid;
+      }
+
+      .terminal-box {
+        border: 1px solid #333;
+      }
+
+      pre.flow-code {
+        color: #000000 !important;
+        background-color: #f7f7f7 !important;
+      }
+
+      .callout {
+        border-left: 4px solid #333 !important;
+        background: #f9f9f9 !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Botão Flutuante de Retorno ao Sumário -->
+  <a href="#sumario" class="back-to-toc" title="Pular para o Sumário">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+    Sumário
+  </a>
+
+  <div class="document-wrapper">
+
+    <!-- ====================================================================
+         CAPA / CABEÇALHO EDITORIAL
+         ==================================================================== -->
+    <header class="hero-header">
+
+      <h1 class="hero-title">HardWorkManager - Cartilha do Professor</h1>
+
+      <div class="hero-subtitle">
+        Guia de Aplicação Pedagógica do jogo HardWorkManager para o Ensino do <strong>Domínio do Trabalho do Projeto -
+          PMBOK® Guide 7ª Edição</strong>
+      </div>
+
+      <!-- Ficha Técnica em Cards -->
+      <div class="meta-cards-grid">
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            Público-alvo
+          </div>
+          <div class="meta-card-value">
+            Graduação em Computação, Engenharia de Software e Sistemas de Informação
+          </div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            Duração
+          </div>
+          <div class="meta-card-value">
+            60 ou 100 minutos
+          </div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-card-header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="12" x="3" y="4" rx="2" />
+              <line x1="2" x2="22" y1="20" y2="20" />
+            </svg>
+            Formato
+          </div>
+          <div class="meta-card-value">
+            Equipes de 3 a 4 alunos, 1 dispositivo por equipe
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         SUMÁRIO NAVEGÁVEL
+         ==================================================================== -->
+    <section id="sumario" class="toc-container">
+      <div class="toc-header">
+        <h2 class="toc-title serif-heading">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+            stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" x2="21" y1="6" y2="6" />
+            <line x1="8" x2="21" y1="12" y2="12" />
+            <line x1="8" x2="21" y1="18" y2="18" />
+            <line x1="3" x2="3.01" y1="6" y2="6" />
+            <line x1="3" x2="3.01" y1="12" y2="12" />
+            <line x1="3" x2="3.01" y1="18" y2="18" />
+          </svg>
+          Sumário do Manual
+        </h2>
+        <span class="toc-hint">Clique para saltar diretamente</span>
+      </div>
+
+      <div class="toc-grid">
+        <a href="#1-apresentação-do-jogo" class="toc-item">
+          <span class="toc-number">01</span>
+          <span class="toc-text">Apresentação do Jogo</span>
+        </a>
+
+        <a href="#2-objetivos-de-aprendizagem" class="toc-item">
+          <span class="toc-number">02</span>
+          <span class="toc-text">Objetivos de Aprendizagem</span>
+        </a>
+
+        <a href="#3-público-alvo-pré-requisitos-e-organização-da-turma" class="toc-item">
+          <span class="toc-number">03</span>
+          <span class="toc-text">Público-Alvo, Pré-Requisitos e Organização</span>
+        </a>
+
+        <a href="#4-relação-com-o-pmbok-7--mapeamento-revisado" class="toc-item">
+          <span class="toc-number">04</span>
+          <span class="toc-text">Relação com o PMBOK 7 - Mapeamento</span>
+        </a>
+
+        <a href="#5-glossário--jogo--pmbok-7--prática-de-software" class="toc-item">
+          <span class="toc-number">05</span>
+          <span class="toc-text">Glossário Jogo ↔ PMBOK 7 ↔ Prática</span>
+        </a>
+
+        <a href="#6-preparação-da-aula" class="toc-item">
+          <span class="toc-number">06</span>
+          <span class="toc-text">Preparação da Aula</span>
+        </a>
+
+        <a href="#7-papéis-da-equipe-e-mecânica-da-rodada" class="toc-item">
+          <span class="toc-number">07</span>
+          <span class="toc-text">Papéis da Equipe e Mecânica da Rodada</span>
+        </a>
+
+        <a href="#8-papel-do-professor-durante-a-partida" class="toc-item">
+          <span class="toc-number">08</span>
+          <span class="toc-text">Papel do Professor Durante a Partida</span>
+        </a>
+
+        <a href="#9-plano-de-aula-minutado-100-minutos" class="toc-item highlight-toc">
+          <span class="toc-number">09</span>
+          <span class="toc-text">Plano de Aula Minutado (100 min)</span>
+        </a>
+
+        <a href="#10-debriefing--roteiro-e-condução-25-min" class="toc-item highlight-toc">
+          <span class="toc-number">10</span>
+          <span class="toc-text">Debriefing - Roteiro e Condução (25 min)</span>
+        </a>
+
+        <a href="#11-avaliação-da-aprendizagem" class="toc-item">
+          <span class="toc-number">11</span>
+          <span class="toc-text">Avaliação da Aprendizagem</span>
+        </a>
+
+        <a href="#12-dificuldades-comuns-e-faq" class="toc-item">
+          <span class="toc-number">12</span>
+          <span class="toc-text">Dificuldades Comuns e FAQ</span>
+        </a>
+
+        <a href="#13-adaptações-da-atividade" class="toc-item">
+          <span class="toc-number">13</span>
+          <span class="toc-text">Adaptações da Atividade</span>
+        </a>
+
+        <a href="#14-apêndice-teórico-científico" class="toc-item">
+          <span class="toc-number">14</span>
+          <span class="toc-text">Apêndice Teórico-Científico</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SEÇÃO 1: APRESENTAÇÃO DO JOGO
+         ==================================================================== -->
+    <article id="1-apresentação-do-jogo" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">01</span>
+        <h2 class="section-title">Apresentação do Jogo</h2>
+      </div>
+
+      <p>
+        <strong>HardWorkManager</strong> é um jogo sério digital e colaborativo, estruturado em situações de decisão,
+        chamadas de dilemas, ambientadas no Domínio do Trabalho do Projeto - PMBOK® Guide 7ª Edição. As equipes assumem
+        papéis de liderança em um projeto fictício de modernização de um sistema acadêmico e enfrentam decisões
+        envolvendo prazo, qualidade, saúde da equipe e conhecimento organizacional.
+      </p>
+
+      <p>
+        O sistema do jogo (banco de 50 dilemas e sistema de consequências) roda inteiramente no navegador do aluno.
+        Após o carregamento inicial, a partida continua mesmo sem internet.
+      </p>
+
+      <p>
+        Recomenda-se aplicar o jogo em um laboratório de informática com pelo menos 15 computadores, de modo que cada
+        equipe utilize um dispositivo. A atividade também pode ser realizada em sala de aula, utilizando os notebooks,
+        tablets ou smartphones dos próprios alunos.
+      </p>
+
+      <h3 class="subsection-title">1.1 Dinâmica da jogabilidade em grupo</h3>
+      <ul class="standard-list">
+        <li>1 dispositivo físico por equipe (notebook, computador de laboratório, tablet ou smartphone).</li>
+        <li>Nas rodadas de voto individual, a tela exibe um aviso de sigilo e os demais integrantes não devem
+          visualizar a tela durante o voto.</li>
+        <li>Telas de votação coletiva, revelação e resultado são visualizadas por toda a equipe.</li>
+      </ul>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 2: OBJETIVOS DE APRENDIZAGEM
+         ==================================================================== -->
+    <article id="2-objetivos-de-aprendizagem" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">02</span>
+        <h2 class="section-title">Objetivos de Aprendizagem</h2>
+      </div>
+
+      <p>Ao final da atividade, o aluno deve ser capaz de:</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Nível (Bloom)</th>
+              <th style="width: 48%;">O aluno será capaz de...</th>
+              <th style="width: 30%;">Onde isso aparece no jogo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Lembrar</strong></td>
+              <td>Identificar vocabulário técnico: dívida técnica, aumento não planejado do escopo
+                (<em>Scope Creep</em>), colaboração entre membros da equipe (<em>Swarming</em>), definição de
+                concluído (<em>Definition of Done</em>), conhecimento tácito e concentração de conhecimento (silo de
+                conhecimento)</td>
+              <td>
+                <div class="game-preview-container">
+                  <span class="game-preview-text">Textos dos dilemas e feedback de métricas</span>
+                  <div class="game-preview-btns">
+                    <button type="button" class="btn-game-preview" data-preview-index="0" title="Ver captura do dilema e impacto inicial">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Ver Tela do Dilema
+                    </button>
+                    <button type="button" class="btn-game-preview" data-preview-index="1" title="Ver captura de lições aprendidas e riscos">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Ver Lições Aprendidas
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Compreender</strong></td>
+              <td>Explicar a tensão entre entrega, qualidade, saúde da equipe e conhecimento organizacional</td>
+              <td>
+                <div class="game-preview-container">
+                  <span class="game-preview-text">Painel de 4 métricas e suas variações</span>
+                  <div class="game-preview-btns">
+                    <button type="button" class="btn-game-preview" data-preview-index="2" title="Ver captura do painel de métricas">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Ver Painel de Métricas
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Aplicar</strong></td>
+              <td>Argumentar em um debate estruturado defendendo um papel (<span
+                  class="role-badge role-badge-pm">Gerente de Projetos</span>, <span
+                  class="role-badge role-badge-tech">Líder Técnico</span>,
+                <span class="role-badge role-badge-ux">Líder de UX</span>)
+              </td>
+              <td>
+                <div class="game-preview-container">
+                  <span class="game-preview-text">Tela de Apuração &amp; Debate</span>
+                  <div class="game-preview-btns">
+                    <button type="button" class="btn-game-preview" data-preview-index="3" title="Ver captura de apuração e debate estruturado">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Ver Apuração &amp; Debate
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Analisar</strong></td>
+              <td>Identificar como uma decisão tomada para resolver um problema no curto prazo pode gerar uma
+                consequência
+                negativa ou diferente somente mais adiante.</td>
+              <td>
+                <div class="game-preview-container">
+                  <span class="game-preview-text">Sistema de consequências</span>
+                  <div class="game-preview-btns">
+                    <button type="button" class="btn-game-preview" data-preview-index="4" title="Ver captura do sistema de consequências e ecos do passado">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Ver Sistema de Consequências
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Callout: Cadeia pedagógica -->
+      <div class="callout callout-info">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" x2="12" y1="8" y2="12" />
+          <line x1="12" x2="12.01" y1="16" y2="16" />
+        </svg>
+        <div class="callout-body">
+          <strong>Cadeia pedagógica:</strong> Objetivo &rarr; conceito do PMBOK 7 &rarr; dilema do jogo &rarr; decisão
+          da equipe &rarr; métrica/consequência &rarr; reflexão pós-partida. Você pode usar esta cadeia como roteiro
+          mental ao conduzir a aula: cada intervenção deve reconectar um desses elos.
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 3: PÚBLICO-ALVO, PRÉ-REQUISITOS E ORGANIZAÇÃO DA TURMA
+         ==================================================================== -->
+    <article id="3-público-alvo-pré-requisitos-e-organização-da-turma" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">03</span>
+        <h2 class="section-title">Público-Alvo, Pré-Requisitos e Organização da Turma</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 32%;">Item</th>
+              <th style="width: 68%;">Recomendação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pré-requisito de conteúdo</strong></td>
+              <td>Já ter tido ao menos uma aula introdutória sobre o Domínio Trabalho do Projeto do PMBOK 7. O jogo
+                consolida, não substitui, essa introdução.</td>
+            </tr>
+            <tr>
+              <td><strong>Tamanho de turma ideal</strong></td>
+              <td>15 a 40 alunos (5 a 10 equipes)</td>
+            </tr>
+            <tr>
+              <td><strong>Fora dessa faixa</strong></td>
+              <td>Ver Seção 13 - Adaptações</td>
+            </tr>
+            <tr>
+              <td><strong>Organização física</strong></td>
+              <td>Mesas ou cadeiras agrupadas de 3-4 lugares, com espaço para o professor circular entre as equipes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 4: RELAÇÃO COM O PMBOK 7 - MAPEAMENTO REVISADO
+         ==================================================================== -->
+    <article id="4-relação-com-o-pmbok-7--mapeamento-revisado" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">04</span>
+        <h2 class="section-title">Relação com o PMBOK 7</h2>
+      </div>
+
+      <p>
+        O jogo é interdisciplinar: nem todo conceito abordado pertence estritamente ao Domínio Trabalho do Projeto. Esta
+        seção separa o que é núcleo do domínio do que dialoga com outros domínios e princípios, evite apresentar todos
+        os conceitos como "Trabalho do Projeto" para não introduzir um erro conceitual em sala.
+      </p>
+
+      <h3 class="subsection-title">4.1. Módulos temáticos do jogo e sua relação com o PMBOK® 7</h3>
+      <p>
+        O HardWorkManager foca na operacionalização cotidiana da equipe de projetos no Domínio Trabalho do Projeto
+        (Project Work Performance Domain) do PMBOK 7ª Edição (Seção 2.5). O catálogo de 50 dilemas está organizado
+        em cinco módulos temáticos:
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Módulo Temático no Jogo</th>
+              <th style="width: 32%;">Relação com o PMBOK® 7</th>
+              <th style="width: 40%;">Foco de Aprendizagem Prática</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Adaptação dos Processos (Tailoring)</strong></td>
+              <td>PMBOK® 7 - Seção 2.5.1: adaptação dos processos às necessidades do projeto e eliminação de atividades
+                que não agregam valor</td>
+              <td>Avaliar quais processos são realmente necessários, reduzir atividades burocráticas e adaptar a forma
+                de trabalho às necessidades do projeto.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Comportamentos de Liderança</strong></td>
+              <td>PMBOK® 7 - Seção 2.5.3: liderança e organização do trabalho da equipe</td>
+              <td>Desenvolver uma liderança que proteja a equipe de demandas não planejadas, promova uma distribuição
+                adequada do trabalho e estimule a análise dos problemas sem buscar culpados.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Pensamento Sistêmico</strong></td>
+              <td>PMBOK® 7 - Seção 2.5.2: análise das relações entre as diferentes restrições do projeto</td>
+              <td>Compreender que uma decisão em uma parte do projeto pode afetar outras áreas, considerando as relações
+                entre prazo, qualidade, recursos, tecnologia e capacidade da equipe.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Gestão de Mudanças</strong></td>
+              <td>PMBOK® 7 - Seção 2.5.7: gerenciamento e adaptação às mudanças que afetam o projeto</td>
+              <td>Avaliar solicitações inesperadas, analisar seus impactos no projeto, negociar mudanças e evitar
+                alterações de escopo sem considerar suas consequências.</td>
+            </tr>
+            <tr>
+              <td><strong>5. Qualidade e Excelência</strong></td>
+              <td>PMBOK® 7 - Seção 2.5.1: qualidade do produto e das entregas</td>
+              <td>Equilibrar velocidade e qualidade, identificar problemas que podem comprometer as entregas e
+                estabelecer critérios para considerar uma entrega concluída.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 5: GLOSSÁRIO JOGO ↔ PMBOK 7 ↔ PRÁTICA DE SOFTWARE
+         ==================================================================== -->
+    <article id="5-glossário--jogo--pmbok-7--prática-de-software" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">05</span>
+        <h2 class="section-title">Glossário - Jogo ↔ PMBOK 7 ↔ Prática de Software</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Termo no jogo</th>
+              <th style="width: 36%;">Conceito no PMBOK 7</th>
+              <th style="width: 36%;">Contexto de desenvolvimento de software</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sistema de consequências</strong></td>
+              <td>Consequências que podem surgir após uma decisão tomada anteriormente</td>
+              <td>Uma decisão de curto prazo pode aumentar a dívida técnica e gerar problemas posteriormente</td>
+            </tr>
+            <tr>
+              <td><strong>Capacidade de Entrega</strong></td>
+              <td>Eficiência de execução do Trabalho do Projeto</td>
+              <td>Velocidade da equipe</td>
+            </tr>
+            <tr>
+              <td><strong>Qualidade do Produto</strong></td>
+              <td>Domínio Entrega - qualidade do que é produzido</td>
+              <td>Cobertura de testes, bugs em produção</td>
+            </tr>
+            <tr>
+              <td><strong>Saúde da Equipe</strong></td>
+              <td>Domínio Equipe - clima e sustentabilidade</td>
+              <td>Índice de burnout, rotatividade</td>
+            </tr>
+            <tr>
+              <td><strong>Conhecimento Organizacional</strong></td>
+              <td>Gestão do conhecimento (Trabalho do Projeto)</td>
+              <td>Documentação técnica, integração de novos integrantes</td>
+            </tr>
+            <tr>
+              <td><strong>Voto de Minerva</strong></td>
+              <td>Decisão final do Gerente de Projetos em caso de empate</td>
+              <td>Decisão tomada pelo responsável pela decisão final quando a equipe não chega a um consenso</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 6: PREPARAÇÃO DA AULA
+         ==================================================================== -->
+    <article id="6-preparação-da-aula" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">06</span>
+        <h2 class="section-title">Preparação da Aula</h2>
+      </div>
+
+      <h3 class="subsection-title">6.1 Acesso Técnico</h3>
+
+      <ul class="checklist">
+        <li class="checklist-item">
+          <div class="checklist-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div>Confirme, com 1 dia de antecedência, que o link do jogo abre nos navegadores do laboratório (Chrome/Edge
+            atualizados).</div>
+        </li>
+
+        <li class="checklist-item">
+          <div class="checklist-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div>O jogo usa armazenamento local do navegador: as partidas não podem ser recuperadas se os dados
+            armazenados pelo navegador forem apagados, avise as equipes a não fechar a aba durante a atividade.</div>
+        </li>
+
+        <li class="checklist-item">
+          <div class="checklist-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div>Tenha uma rede alternativa (ponto de acesso do celular) apenas para o carregamento inicial da página,
+            caso o Wi-Fi institucional falhe.</div>
+        </li>
+
+        <li class="checklist-item">
+          <div class="checklist-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div>Peça a cada equipe que registre o nome no início - isso evita perda de progresso em caso de
+            recarregamento acidental.</div>
+        </li>
+      </ul>
+
+      <h3 class="subsection-title">6.2 Materiais e Espaço</h3>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60%;">Item</th>
+              <th style="width: 40%;">Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dispositivo com navegador atualizado</strong></td>
+              <td>1 por equipe</td>
+            </tr>
+            <tr>
+              <td><strong>Projetor (para debriefing)</strong></td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td><strong>Mesas ou carteiras de 3-4 lugares</strong></td>
+              <td>1/3-4 por equipe</td>
+            </tr>
+            <tr>
+              <td><strong>Cópia do Memorial de Decisões (registro das decisões tomadas durante a partida) (Seção
+                  11)</strong></td>
+              <td>1 por equipe</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Callout: Antes de Começar (Aviso / Warning) -->
+      <div class="callout callout-warning">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <line x1="12" x2="12" y1="9" y2="13" />
+          <line x1="12" x2="12.01" y1="17" y2="17" />
+        </svg>
+        <div class="callout-body">
+          <strong>Antes de começar:</strong> confirme que os alunos já tiveram contato prévio com os Domínios de
+          Desempenho do PMBOK 7 (ver Seção 3). Sem essa base, o debriefing perde profundidade.
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 7: PAPÉIS DA EQUIPE E MECÂNICA DA RODADA
+         ==================================================================== -->
+    <article id="7-papéis-da-equipe-e-mecânica-da-rodada" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">07</span>
+        <h2 class="section-title">Papéis da Equipe e Mecânica da Rodada</h2>
+      </div>
+
+      <h3 class="subsection-title">7.1 Papéis</h3>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Papel</th>
+              <th style="width: 32%;">Foco do Papel</th>
+              <th style="width: 38%;">Atribuições</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="role-badge role-badge-pm">Gerente de Projetos (PM)</span>
+              </td>
+              <td><strong>Coordenação e tomada de decisão</strong></td>
+              <td>Acompanhar o projeto, considerar os diferentes interesses envolvidos, facilitar a comunicação com as
+                partes interessadas e tomar a decisão final em caso de empate.</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="role-badge role-badge-tech">Líder Técnico</span>
+              </td>
+              <td><strong>Soluções técnicas e qualidade</strong></td>
+              <td>Avaliar impactos técnicos, considerar código existente, testes, riscos técnicos e consequências das
+                decisões para a solução.</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="role-badge role-badge-ux">Líder de UX</span>
+              </td>
+              <td><strong>Usuário e experiência de uso</strong></td>
+              <td>Avaliar usabilidade, acessibilidade e impacto das decisões na experiência dos usuários.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-style: italic; color: var(--muted-foreground); margin-top: -0.5rem; margin-bottom: 1.5rem;">
+        *Equipes de 4 alunos: o 4º integrante atua como co-líder de UX.*
+      </p>
+
+      <h3 class="subsection-title">7.2 Fluxo da Rodada</h3>
+
+      <div style="text-align: center; margin: 1.75rem 0;">
+        <img
+          src="fluxo_rodada.jpg"
+          alt="Fluxograma do fluxo da rodada: dilema → voto secreto → unânime (decisão direta) ou divergente (pausa para comitê) → segunda votação → empate (Voto de Minerva) → métricas atualizadas"
+          style="max-width: 520px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-md); border: 1px solid var(--border);"
+        >
+      </div>
+
+      <h3 class="subsection-title">7.3 Métricas e Game Over</h3>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 45%;">Métrica</th>
+              <th style="width: 25%;">Início</th>
+              <th style="width: 30%;">Zona crítica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Capacidade de Entrega</strong></td>
+              <td>100</td>
+              <td>&lt; 40 → fim de jogo</td>
+            </tr>
+            <tr>
+              <td><strong>Qualidade do Produto</strong></td>
+              <td>100</td>
+              <td>&lt; 40 → fim de jogo</td>
+            </tr>
+            <tr>
+              <td><strong>Saúde da Equipe</strong></td>
+              <td>100</td>
+              <td>&lt; 40 → fim de jogo</td>
+            </tr>
+            <tr>
+              <td><strong>Conhecimento Organizacional</strong></td>
+              <td>50</td>
+              <td>&lt; 20 → perdas de capacidade de entrega têm seu impacto dobrado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Callout: Dica de Abertura (Info / Dica) -->
+      <div class="callout callout-info">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+        </svg>
+        <div class="callout-body">
+          <strong>Dica de abertura:</strong> avise antes da partida: "se Conhecimento Organizacional cair abaixo de 20,
+          qualquer perda de prazo custará o dobro." Isso antecipa frustração e já ensina o valor da documentação.
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 8: PAPEL DO PROFESSOR DURANTE A PARTIDA
+         ==================================================================== -->
+    <article id="8-papel-do-professor-durante-a-partida" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">08</span>
+        <h2 class="section-title">Papel do Professor Durante a Partida</h2>
+      </div>
+
+      <p>
+        O professor atua como <strong>facilitador e observador</strong> - não como árbitro das decisões. Intervenha para
+        provocar reflexão, nunca para indicar a opção "certa".
+      </p>
+
+      <h3 class="subsection-title">8.1 Quando intervir</h3>
+      <ul class="standard-list">
+        <li>Uma equipe decide em menos de 30 segundos sem debate → provoque.</li>
+        <li>Um integrante domina todas as falas → direcione a pergunta a outro papel.</li>
+        <li>Uma equipe está confusa sobre uma regra → esclareça a mecânica, mas não sugira a decisão.</li>
+      </ul>
+
+      <h3 class="subsection-title">8.2 Frases de intervenção reflexiva (exemplos prontos)</h3>
+      <ul class="standard-list">
+        <li>"Qual métrica vocês estão dispostos a sacrificar aqui, e por quê?"</li>
+        <li>"Se essa decisão gerar uma consequência daqui a 3 rodadas, vocês vão lembrar por quê a tomaram?"</li>
+        <li>"Líder Técnico, você concorda com essa síntese do Gerente de Projetos?"</li>
+      </ul>
+
+      <!-- Callout: Limite (Crítico / Limite) -->
+      <div class="callout callout-critical">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="4.93" x2="19.07" y1="4.93" y2="19.07" />
+        </svg>
+        <div class="callout-body">
+          <strong>Limite:</strong> nunca revele qual opção é a "certa". Peça sempre justificativa, não confirmação.
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 9: PLANO DE AULA MINUTADO (100 MINUTOS)
+         ==================================================================== -->
+    <article id="9-plano-de-aula-minutado-100-minutos" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">09</span>
+        <h2 class="section-title">Plano de Aula Minutado (100 minutos)</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 18%;">Etapa</th>
+              <th style="width: 14%;">Duração</th>
+              <th style="width: 38%;">Professor</th>
+              <th style="width: 30%;">Alunos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Abertura</strong></td>
+              <td>15 min</td>
+              <td>Retoma os principais conceitos do Domínio do Trabalho do Projeto e apresenta os objetivos e a dinâmica
+                da atividade.</td>
+              <td>Formam equipes de 3 a 4 alunos e acompanham as orientações iniciais.</td>
+            </tr>
+            <tr>
+              <td><strong>Preparação</strong></td>
+              <td>10 min</td>
+              <td>Orienta o acesso ao jogo, explica as regras básicas e organiza a distribuição dos papéis.</td>
+              <td>Acessam o jogo, conhecem o cenário e escolhem os papéis da equipe.</td>
+            </tr>
+            <tr>
+              <td><strong>Partida</strong></td>
+              <td>45 min</td>
+              <td>Circula entre as equipes, observa as discussões e intervém com perguntas que estimulem a reflexão,
+                conforme a Seção 8.</td>
+              <td>Analisam os dilemas, discutem as alternativas e tomam decisões em equipe.</td>
+            </tr>
+            <tr>
+              <td><strong>Reflexão Pós-Partida</strong></td>
+              <td>25 min</td>
+              <td>Conduz a discussão sobre as decisões tomadas, suas consequências e a relação com os conceitos
+                estudados.</td>
+              <td>Compartilham decisões relevantes, analisam seus resultados e relacionam a experiência aos conceitos do
+                PMBOK® 7.</td>
+            </tr>
+            <tr>
+              <td><strong>Fechamento</strong></td>
+              <td>5 min</td>
+              <td>Retoma os principais aprendizados e orienta o preenchimento do Memorial de Decisões.</td>
+              <td>Registram as orientações para a atividade de avaliação e identificam os principais aprendizados da
+                partida.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-style: italic; color: #4b5563; margin-top: 0.5rem;">
+        *Aula de 60 min: reduza a partida para 25 min (limite manualmente o número de dilemas) e a reflexão pós-partida
+        para 15 min, mantendo as 4 perguntas da Seção 10 de forma mais rápida.*
+      </p>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 10: DEBRIEFING - ROTEIRO E CONDUÇÃO (25 MIN)
+         ==================================================================== -->
+    <article id="10-debriefing--roteiro-e-condução-25-min" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">10</span>
+        <h2 class="section-title">Roteiro de Reflexão Pós-Partida Sugerido (25 min)</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 14%;">Tempo</th>
+              <th style="width: 46%;">Pergunta</th>
+              <th style="width: 40%;">Como conduzir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>6 min</strong></td>
+              <td><strong>Alguma equipe atingiu uma condição de fim de jogo? O que levou a esse resultado?</strong></td>
+              <td>Peça que cada equipe identifique a métrica que atingiu a zona crítica e explique brevemente qual
+                decisão ou sequência de decisões contribuiu para o resultado. Registre os principais fatores no quadro.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>6 min</strong></td>
+              <td><strong>Alguma decisão tomada no início da partida gerou uma consequência somente algumas rodadas
+                  depois?</strong></td>
+              <td>Peça que as equipes identifiquem um exemplo de consequência futura e discutam se o impacto poderia ter
+                sido previsto no momento da decisão.</td>
+            </tr>
+            <tr>
+              <td><strong>6 min</strong></td>
+              <td><strong>Como os diferentes papéis contribuíram para as decisões da equipe?</strong></td>
+              <td>Direcione a pergunta aos <span class="role-badge role-badge-pm">Gerentes de Projetos</span>, <span
+                  class="role-badge role-badge-tech">Líderes Técnicos</span> e <span
+                  class="role-badge role-badge-ux">Líderes de UX</span>. Peça que expliquem quais aspectos de suas
+                funções influenciaram as decisões e se houve conflitos entre diferentes prioridades.</td>
+            </tr>
+            <tr>
+              <td><strong>5 min</strong></td>
+              <td><strong>Como a adaptação dos processos afetou o trabalho da equipe e os resultados do
+                  projeto?</strong></td>
+              <td>Relacione as respostas ao conceito de adaptação dos processos (<em>Tailoring</em>) apresentado na
+                Seção 4. Discuta quando simplificar um processo pode ajudar e quando pode gerar consequências negativas.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>2 min</strong></td>
+              <td><strong>O que a equipe faria diferente se pudesse jogar novamente?</strong></td>
+              <td>Encerre destacando que as decisões envolvem diferentes consequências e que a experiência do jogo deve
+                ser relacionada aos conceitos do PMBOK® 7.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Callout: Se a turma ficar em silêncio (Info / Dica) -->
+      <div class="callout callout-info">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        <div class="callout-body">
+          <strong>Se a turma ficar em silêncio:</strong> você pode usar uma resposta observada durante a partida
+          ("vi a equipe X escolher a opção B no dilema da vulnerabilidade de segurança - por quê?").
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 11: AVALIAÇÃO DA APRENDIZAGEM
+         ==================================================================== -->
+    <article id="11-avaliação-da-aprendizagem" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">11</span>
+        <h2 class="section-title">Avaliação da Aprendizagem</h2>
+      </div>
+
+      <!-- Callout: Princípio Formativo (Sucesso / Verde) -->
+      <div class="callout callout-success">
+        <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+        <div class="callout-body">
+          <strong>Princípio formativo:</strong> nunca avalie pela pontuação final do jogo. Uma equipe que termina o
+          jogo, mas consegue identificar e justificar as causas de seus resultados pode demonstrar uma aprendizagem mais
+          consistente do que uma equipe que obtém um resultado favorável sem conseguir explicar suas decisões.
+        </div>
+      </div>
+
+      <!-- Tabela de componentes de avaliação (da Cartilha) -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 38%;">Componente</th>
+              <th style="width: 22%;">Peso</th>
+              <th style="width: 40%;">Critério</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Memorial de Decisões</strong></td>
+              <td>50%</td>
+              <td>Ver modelo abaixo</td>
+            </tr>
+            <tr>
+              <td><strong>Argumentação no debate</strong></td>
+              <td>30%</td>
+              <td>Clareza técnica, escuta ativa, defesa coerente do papel</td>
+            </tr>
+            <tr>
+              <td><strong>Gestão de risco</strong></td>
+              <td>20%</td>
+              <td>Consistência do grupo em evitar perdas evitáveis</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        O <strong>Memorial de Decisões</strong> é o instrumento central de avaliação individual ou em equipe pós-jogo.
+        Consiste em um relatório reflexivo e analítico no qual os estudantes documentam criticamente as decisões mais
+        impactantes vivenciadas durante a partida sob a ótica de cada papel (<span
+          class="role-badge role-badge-pm">Gerente de Projetos</span>, <span class="role-badge role-badge-tech">Líder
+          Técnico</span> e <span class="role-badge role-badge-ux">Líder de UX</span>).
+      </p>
+
+      <p>
+        Ao avaliar o memorial, o docente deve focar no rigor da análise, na capacidade de conectar a prática aos
+        conceitos do PMBOK 7, no diagnóstico causal dos desdobramentos (especialmente as consequências diferidas) e na
+        honestidade da reflexão autocrítica. A avaliação utiliza a seguinte rubrica (total de 10,0 pontos):
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 32%;">Critério</th>
+              <th style="width: 18%;">Pontuação</th>
+              <th style="width: 50%;">O que observar no relatório</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Profundidade da Análise dos Dilemas</strong></td>
+              <td>4,0 pts</td>
+              <td>O grupo descreveu com clareza os 3 dilemas e fundamentou as escolhas com o raciocínio de cada papel
+                (<span class="role-badge role-badge-pm">Gerente de Projetos</span>, <span
+                  class="role-badge role-badge-tech">Líder Técnico</span>, <span class="role-badge role-badge-ux">Líder
+                  de UX</span>)?</td>
+            </tr>
+            <tr>
+              <td><strong>2. Articulação com o PMBOK 7</strong></td>
+              <td>3,0 pts</td>
+              <td>Houve aplicação correta dos conceitos do PMBOK 7 (dívida técnica, adaptação dos processos, gestão de
+                mudanças) para justificar as decisões?</td>
+            </tr>
+            <tr>
+              <td><strong>3. Diagnóstico Crítico e Consequências</strong></td>
+              <td>3,0 pts</td>
+              <td>A equipe conseguiu conectar as consequências diferidas às escolhas iniciais e fazer uma autoavaliação
+                honesta dos resultados?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="subsection-title">11.1 Template do Memorial de Decisões (1 página, entrega individual ou por equipe)
+      </h3>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40%;">Campo</th>
+              <th style="width: 60%;">O que preencher</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dilema escolhido (3 no total)</strong></td>
+              <td>Nome/resumo do dilema</td>
+            </tr>
+            <tr>
+              <td><strong>Opção escolhida</strong></td>
+              <td>A, B ou C</td>
+            </tr>
+            <tr>
+              <td><strong>Justificativa à luz do PMBOK® 7</strong></td>
+              <td>Relacione a decisão a um conceito ou domínio relacionado apresentado na Seção 4</td>
+            </tr>
+            <tr>
+              <td><strong>Impacto observado</strong></td>
+              <td>Métricas afetadas e consequências, se houve</td>
+            </tr>
+            <tr>
+              <td><strong>O que faria diferente</strong></td>
+              <td>Reflexão crítica de 2-3 linhas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-card">
+        <div class="example-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" x2="8" y1="13" y2="13" />
+            <line x1="16" x2="8" y1="17" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          Exemplo preenchido
+        </div>
+        <div class="example-body">
+          <strong>Dilema:</strong> "Problema identificado próximo ao prazo de entrega" · <strong>Opção:</strong> B
+          (solução rápida) · <strong>Justificativa:</strong> priorizamos a Capacidade de Entrega (Trabalho do Projeto),
+          mas reconhecemos o impacto potencial na Qualidade do Produto · <strong>Impacto:</strong> +5 Capacidade de
+          Entrega, −10 Qualidade do Produto; uma consequência futura foi registrada · <strong>Reflexão:</strong>
+          "Deveríamos ter considerado uma verificação adicional antes de aplicar a solução."
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 12: DIFICULDADES COMUNS E FAQ
+         ==================================================================== -->
+    <article id="12-dificuldades-comuns-e-faq" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">12</span>
+        <h2 class="section-title">Dificuldades Comuns e FAQ</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 42%;">Situação</th>
+              <th style="width: 58%;">O que fazer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Equipe empata e o Gerente de Projetos está ausente</strong></td>
+              <td>Na ausência do Gerente de Projetos, o papel responsável pela decisão final deve ser previamente
+                definido pelo professor. Recomenda-se que o Líder Técnico ou o Líder de UX assuma essa função; registre
+                a substituição.</td>
+            </tr>
+            <tr>
+              <td><strong>Aluno faltante em equipe de 3</strong></td>
+              <td>Redistribua os dois papéis restantes entre 2 alunos</td>
+            </tr>
+            <tr>
+              <td><strong>Dispositivo trava ou perde bateria</strong></td>
+              <td>Troque de dispositivo; o progresso pode ser perdido - a equipe a anotar decisões-chave em papel como
+                backup</td>
+            </tr>
+            <tr>
+              <td><strong>Equipe termina muito antes das outras</strong></td>
+              <td>Peça que iniciem o rascunho do Memorial de Decisões enquanto aguardam</td>
+            </tr>
+            <tr>
+              <td><strong>Wi-Fi cai durante a partida</strong></td>
+              <td>Sem impacto — o sistema do jogo roda localmente após o carregamento inicial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 13: ADAPTAÇÕES DA ATIVIDADE
+         ==================================================================== -->
+    <article id="13-adaptações-da-atividade" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">13</span>
+        <h2 class="section-title">Adaptações da Atividade</h2>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 42%;">Cenário</th>
+              <th style="width: 58%;">Ajuste</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Turma com menos de 15 alunos</strong></td>
+              <td>Forme equipes de 2 (PM acumula UX) em vez de cancelar a atividade</td>
+            </tr>
+            <tr>
+              <td><strong>Turma com mais de 40 alunos</strong></td>
+              <td>Divida em duas sessões paralelas com monitores, ou duas aulas seguidas</td>
+            </tr>
+            <tr>
+              <td><strong>Aula de 60 minutos</strong></td>
+              <td>Ver nota da Seção 9</td>
+            </tr>
+            <tr>
+              <td><strong>Turma sem laboratório de informática</strong></td>
+              <td>Peça que cada equipe use o smartphone de um integrante</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         SEÇÃO 14: APÊNDICE TEÓRICO-CIENTÍFICO
+         ==================================================================== -->
+    <article id="14-apêndice-teórico-científico" class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-badge-num">14</span>
+        <h2 class="section-title">Apêndice Teórico-Científico</h2>
+      </div>
+
+      <h3 class="subsection-title">14.1 Suporte Metodológico</h3>
+      <ul class="standard-list">
+        <li><strong>MEEGA+</strong>: avalia usabilidade e experiência do jogador (motivação, imersão, aprendizagem
+          percebida).</li>
+        <li><strong>Kirkpatrick Nível 1 (Reação)</strong>: questionário de satisfação pós-jogo.</li>
+        <li><strong>Kirkpatrick Nível 2 (Aprendizagem)</strong>: comparação pré-teste/pós-teste e qualidade do Memorial
+          de Decisões.</li>
+      </ul>
+    </article>
+
+    <!-- ====================================================================
+         RODAPÉ DO DOCUMENTO
+         ==================================================================== -->
+    <footer class="document-footer">
+      <p>
+        <em>Guia de Aplicação Pedagógica do jogo HardWorkManager para o Ensino do Domínio do Trabalho do Projeto -
+          PMBOK® Guide 7ª Edição.</em>
+      </p>
+      <div class="footer-license">
+        Licença de uso pedagógico compatível com Creative Commons.
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ====================================================================
+       MODAL DE EVIDÊNCIAS VISUAIS DO JOGO (SEÇÃO 2)
+       ==================================================================== -->
+  <div id="game-evidence-modal" class="evidence-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-preview-title">
+    <div class="evidence-modal-dialog">
+      <!-- Cabeçalho -->
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span id="modal-preview-level" class="modal-level-badge">Nível 1 (Bloom: Lembrar)</span>
+          <h3 id="modal-preview-title" class="modal-title">Texto do Dilema e Desfecho com Métricas</h3>
+        </div>
+        <div class="modal-actions">
+          <span id="modal-preview-counter" class="modal-counter-badge">1 / 5</span>
+          <button type="button" id="modal-close-btn" class="modal-close-btn" aria-label="Fechar visualização">&times;</button>
+        </div>
+      </div>
+
+      <!-- Corpo com Imagem e Botões de Navegação -->
+      <div class="modal-body">
+        <button type="button" id="modal-prev-btn" class="modal-nav-btn modal-nav-prev" aria-label="Imagem anterior" title="Imagem anterior (Seta para a esquerda)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        
+        <div class="modal-img-container">
+          <img id="modal-preview-img" class="modal-image" src="imgs/nivel-1-lembrar-1.png" alt="Captura de tela do jogo HardWorkManager" />
+        </div>
+
+        <button type="button" id="modal-next-btn" class="modal-nav-btn modal-nav-next" aria-label="Próxima imagem" title="Próxima imagem (Seta para a direita)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Rodapé com Descrição e Abas de Navegação -->
+      <div class="modal-footer">
+        <div id="modal-preview-desc" class="modal-description-card">
+          Descrição da captura de tela e sua relação com os objetivos de aprendizagem.
+        </div>
+        <div class="modal-tabs" id="modal-preview-tabs">
+          <!-- Abas geradas dinamicamente via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Interativo do Modal de Evidências -->
+  <script>
+    (function () {
+      const gamePreviews = [
+        {
+          level: "Nível 1 (Bloom: Lembrar)",
+          title: "Texto do Dilema e Desfecho com Métricas",
+          src: "imgs/nivel-1-lembrar-1.png",
+          alt: "Captura de tela: Dilema 'Diretor no Grupo dos Desenvolvedores' e Desfecho da Decisão com impacto nas métricas",
+          tab: "1. Dilema & Desfecho",
+          desc: "<strong>Onde aparece no jogo:</strong> Apresentação do dilema (#SGA-TIME-ENGENHARIA), dicas da mentora e desfecho inicial com impacto imediato nas barras de métricas (Velocidade, Qualidade e Saúde da Equipe). O aluno identifica conceitos e vocabulário técnico de gestão de projetos."
+        },
+        {
+          level: "Nível 1 (Bloom: Lembrar)",
+          title: "Lições Aprendidas e Riscos do Cenário",
+          src: "imgs/nivel-1-lembrar-2.png",
+          alt: "Captura de tela: Cartão de Lições Aprendidas, Riscos Evitados e Trade-offs",
+          tab: "2. Lições Aprendidas",
+          desc: "<strong>Onde aparece no jogo:</strong> Tela pós-decisão com aprendizados práticos do PMBOK 7 (comunicação estruturada e proteção psicológica), riscos evitados (insegurança psicológica e demissões) e cenários alternativos de governança."
+        },
+        {
+          level: "Nível 2 (Bloom: Compreender)",
+          title: "Painel de Métricas e Variações de Desempenho",
+          src: "imgs/nivel-2-compreender.png",
+          alt: "Captura de tela: Painel de métricas com penalidades por burocracia sem valor agregado",
+          tab: "3. Painel de Métricas",
+          desc: "<strong>Onde aparece no jogo:</strong> Painel de barras de métricas após uma decisão de 'Trabalho Sem Valor Agregado' no PMO, evidenciando as penalidades imediatas (-15 Velocidade, -20 Saúde). O aluno compreende o equilíbrio tênue entre velocidade de entrega e clima do time."
+        },
+        {
+          level: "Nível 3 (Bloom: Aplicar)",
+          title: "Tela de Apuração & Debate Estruturado",
+          src: "imgs/nivel-3-aplicar.png",
+          alt: "Captura de tela: Apuração de votos divergentes e rodada de debate estruturado com contagem de tempo",
+          tab: "4. Apuração & Debate",
+          desc: "<strong>Onde aparece no jogo:</strong> Quando há divergência nos votos secretos, aciona-se o debate estruturado com cronômetro (30s) para que cada papel (Gerente de Projetos, Líder Técnico, Líder de UX) defenda seus argumentos antes da votação decisiva."
+        },
+        {
+          level: "Nível 4 (Bloom: Analisar)",
+          title: "Sistema de Consequências e Ecos do Passado",
+          src: "imgs/nivel-4-analisar.png",
+          alt: "Captura de tela: Risco sistêmico registrado e mecânica de Ecos do Passado culminando em Limite Crítico Atingido",
+          tab: "5. Sistema de Consequências",
+          desc: "<strong>Onde aparece no jogo:</strong> Decisões imediatistas registram riscos sistêmicos que retornam como 'Ecos do Passado' em rodadas posteriores. O aluno analisa os desdobramentos de longo prazo que podem desencadear um 'Limite Crítico Atingido'."
+        }
+      ];
+
+      let currentIndex = 0;
+
+      const modal = document.getElementById('game-evidence-modal');
+      const modalLevel = document.getElementById('modal-preview-level');
+      const modalTitle = document.getElementById('modal-preview-title');
+      const modalCounter = document.getElementById('modal-preview-counter');
+      const modalImg = document.getElementById('modal-preview-img');
+      const modalDesc = document.getElementById('modal-preview-desc');
+      const modalTabs = document.getElementById('modal-preview-tabs');
+      const closeBtn = document.getElementById('modal-close-btn');
+      const prevBtn = document.getElementById('modal-prev-btn');
+      const nextBtn = document.getElementById('modal-next-btn');
+
+      // Cria abas de navegação rápida
+      gamePreviews.forEach((item, idx) => {
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'modal-tab-btn' + (idx === 0 ? ' is-active' : '');
+        tab.textContent = item.tab;
+        tab.addEventListener('click', () => {
+          showPreview(idx);
+        });
+        modalTabs.appendChild(tab);
+      });
+
+      function updateModal() {
+        const item = gamePreviews[currentIndex];
+        modalLevel.textContent = item.level;
+        modalTitle.textContent = item.title;
+        modalCounter.textContent = `${currentIndex + 1} / ${gamePreviews.length}`;
+        modalDesc.innerHTML = item.desc;
+
+        modalImg.style.opacity = '0.35';
+        modalImg.src = item.src;
+        modalImg.alt = item.alt;
+
+        modalImg.onload = function () {
+          modalImg.style.opacity = '1';
+        };
+
+        const tabs = modalTabs.querySelectorAll('.modal-tab-btn');
+        tabs.forEach((tab, idx) => {
+          if (idx === currentIndex) {
+            tab.classList.add('is-active');
+          } else {
+            tab.classList.remove('is-active');
+          }
+        });
+      }
+
+      function showPreview(index) {
+        currentIndex = index;
+        updateModal();
+      }
+
+      function openModal(index) {
+        if (typeof index === 'number' && index >= 0 && index < gamePreviews.length) {
+          currentIndex = index;
+        }
+        updateModal();
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
+      function prevPreview() {
+        currentIndex = (currentIndex - 1 + gamePreviews.length) % gamePreviews.length;
+        updateModal();
+      }
+
+      function nextPreview() {
+        currentIndex = (currentIndex + 1) % gamePreviews.length;
+        updateModal();
+      }
+
+      // Conecta botões da tabela
+      document.querySelectorAll('.btn-game-preview').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const idx = parseInt(this.getAttribute('data-preview-index'), 10);
+          openModal(isNaN(idx) ? 0 : idx);
+        });
+      });
+
+      // Controles do modal
+      closeBtn.addEventListener('click', closeModal);
+      prevBtn.addEventListener('click', prevPreview);
+      nextBtn.addEventListener('click', nextPreview);
+
+      // Fecha ao clicar fora da caixa do modal
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Atalhos de teclado
+      document.addEventListener('keydown', function (e) {
+        if (!modal.classList.contains('is-active')) return;
+        if (e.key === 'Escape') {
+          closeModal();
+        } else if (e.key === 'ArrowLeft') {
+          prevPreview();
+        } else if (e.key === 'ArrowRight') {
+          nextPreview();
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
